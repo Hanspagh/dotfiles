@@ -1,0 +1,3 @@
+#!/bin/bash
+# ALIASES
+alias dot='git --git-dir=$HOME/.dots.git/ --work-tree=$HOME'
