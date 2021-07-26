@@ -2,3 +2,4 @@
 htmlcov
 .vscode/*
 .elixir_ls/*
+*.code-workspace
