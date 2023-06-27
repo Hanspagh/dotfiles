@@ -117,10 +117,17 @@ abbrevs+=(
   "vgu"  'vim $(git ls-files --unmerged | cut -f2 | sort -u)'
 )
 
+# Kubennetes pippi
+
+abbrevs+=(
+"kgpj" "kubectl get pippijobs"
+"kgpr" "kubectl get pippijobruns"
+)
+
 # Kubenetes
 abbrevs+=(
 "k" "kubectl"
-
+"kg" "kubectl get"
 
   "kca" 'f(){ kubectl "$@" --all-namespaces;  unset -f f; }; f'
 

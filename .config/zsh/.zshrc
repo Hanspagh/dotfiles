@@ -1,6 +1,7 @@
+export PATH="${PATH}:${HOME}/.local/bin"
+
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/bin:/usr/local/bin:$PATH:/Users/hanspagh/.local/bin
-
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/hanspagh/.oh-my-zsh"
 
@@ -68,7 +69,21 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(zsh-autosuggestions git history-substring-search zsh-syntax-highlighting)
+plugins=(zsh-autosuggestions git history-substring-search zsh-syntax-highlighting you-should-use zsh-abbr) 
+
+### Fix slowness of pastes with zsh-syntax-highlighting.zsh
+pasteinit() {
+  OLD_SELF_INSERT=${${(s.:.)widgets[self-insert]}[2,3]}
+  zle -N self-insert url-quote-magic # I wonder if you'd need `.url-quote-magic`?
+}
+
+pastefinish() {
+  zle -N self-insert $OLD_SELF_INSERT
+}
+zstyle :bracketed-paste-magic paste-init pasteinit
+zstyle :bracketed-paste-magic paste-finish pastefinish
+### Fix slowness of pastes
+
 
 source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -104,11 +119,9 @@ source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ -f ~/.config/zsh/.p10k.zsh ]] && source ~/.config/zsh/.p10k.zsh
 
-. /usr/local/opt/asdf/asdf.sh
-
 
 # Source Abbris
-source ~/.config/zsh/.abbri.zsh
+#source ~/.config/zsh/.abbri.zsh
 
 # Source aliases
 source ~/.config/zsh/aliasrc
@@ -126,13 +139,10 @@ zstyle ':completion:*' menu select
 fpath+=~/.zfunc
 autoload -U compinit && compinit
 source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-
-
-
-
-
-
-
+. /usr/local/opt/asdf/libexec/asdf.sh
+. /Users/hanspagh/Documents/nosync.nosync/Code/avocado-tooling/cli-utils.sh
 
 export PATH="$HOME/.poetry/bin:$PATH"
+export PATH="$HOME/.rd/bin:$PATH"
+#export PATH="$PATH:/Users/hanspagh/.dotnet/tools"
+. ~/.zfunc/_pippi-cli
